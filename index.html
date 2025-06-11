@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eu Amo Você</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #8e2de2, #ff69b4);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      padding: 1rem;
+    }
+
+    h1 {
+      font-size: 8vw;
+      margin-top: 2rem;
+      animation: pulse 2s infinite;
+      text-shadow: 2px 2px 10px #000;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .carousel-container {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+      padding-bottom: 1rem;
+    }
+
+    .carousel-container img {
+      flex: 0 0 80%;
+      scroll-snap-align: center;
+      border-radius: 20px;
+      max-height: 300px;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .mensagem {
+      font-size: 1.5rem;
+      margin: 1rem 0 0.5rem;
+    }
+
+    #contador {
+      font-size: 1.2rem;
+    }
+
+    .frase-final {
+      font-size: 1.1rem;
+      margin-top: 2rem;
+      padding: 1rem;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 2rem;
+    }
+
+    .youtube-icon {
+      font-size: 2rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    .youtube-icon:hover {
+      color: red;
+    }
+
+    .hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('https://cdn-icons-png.flaticon.com/512/833/833472.png'); /* coração transparente */
+  background-size: cover;
+  opacity: 0.7;
+  animation: float 5s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) scale(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.momentos {
+  margin: 2rem auto;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.foto-polaroid {
+  background: white;
+  padding: 10px;
+  border: 2px solid #ccc;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  width: 150px;
+  transform: rotate(-2deg);
+  transition: transform 0.3s ease;
+}
+
+.foto-polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.foto-polaroid img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.foto-polaroid p {
+  color: #000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.frase-digitada {
+  text-align: center;
+  font-size: 1.5rem;
+  color: white;
+  font-family: 'GlacialIndifference', sans-serif;
+  margin: 2rem 0;
+  z-index: 2;
+  position: relative;
+}
+
+
+
+
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 4rem;
+      }
+      .carousel-container img {
+        max-height: 400px;
+        flex: 0 0 30%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Tela de Boas-Vindas -->
+  <div id="tela-inicial" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <h2 style="font-size: 6vw; margin-bottom: 2rem;">💘 Oi, meu amor!</h2>
+    <button onclick="iniciar()" style="font-size: 1.2rem; padding: 1rem 2rem; border-radius: 10px; background-color: #ff69b4; color: white; border: none; box-shadow: 0 0 10px rgba(0,0,0,0.3);">Toque para começar 💖</button>
+  </div>
+
+  <!-- Conteúdo Principal (escondido até o clique) -->
+  <div id="conteudo" style="display: none;">
+    <!-- Áudio -->
+    <audio id="musica" loop>
+      <source src="audio/Tribalistas - Velha Infância(MP3_160K).mp3" type="audio/mp3">
+      Seu navegador não suporta áudio.
+    </audio>
+
+    <!-- Título -->
+    <h1>Eu amo você</h1>
+
+    <!-- Carrossel -->
+    <div class="carousel-container">
+      <img src="imagens/1.jpg" alt="Foto 1">
+    <img src="imagens/2.jpg" alt="Foto 2">
+    <img src="imagens/3.jpg" alt="Foto 3">
+    <img src="imagens/4.jpg" alt="Foto 4">
+    <img src="imagens/5.jpg" alt="Foto 5">
+    <img src="imagens/6.jpg" alt="Foto 6">
+    </div>
+
+    <!-- Mensagem -->
+    <div class="mensagem">Eu te amo Letícia desde:</div>
+    <div id="contador">Carregando...</div>
+
+    <!-- Frase -->
+    <div class="frase-final">
+      💖 Você é a luz que ilumina meu caminho, o amor que dá sentido à minha vida.  
+      <br>🌸 Te amo mais do que as palavras podem dizer! 🌟💕💌
+    </div>
+
+    
+
+    <!--Galeria de Momentos com Legendas (estilo Polaroid)-->
+  <section class="momentos">
+  <div class="galeria">
+    <div class="foto-polaroid">
+      <img src="imagens/polaroid_1.jpg" alt="Momento 1">
+      <p>Neste dia você falou que não gostava de açaí e colocou um pote maior que o meu 🤭</p>
+    </div>
+    <div class="foto-polaroid">
+      <img src="imagens/polaroid_2.jpg" alt="Momento 2">
+      <p>Nossa primeira caminhada juntos e neste dia foi minha primeira vez que fui te buscar na tua casa 🏃‍♂️🏃‍♀️</p>
+    </div>
+    <!-- Adicione mais blocos assim -->
+     <div class="foto-polaroid">
+      <img src="imagens/polaroid_3.jpg" alt="Momento 1">
+      <p>HAaa este dia... Foi um dia que eu nunca esquecerei pois estava os dois amores da minha vida 👨‍👩‍👧</p>
+    </div>
+    <div class="foto-polaroid">
+      <img src="imagens/polaroid_4.jpg" alt="Momento 1">
+      <p>Todo cuidado é pouco na alimentação né 😋</p>
+    </div>
+    <div class="foto-polaroid">
+      <img src="imagens/polaroid_5.jpg" alt="Momento 1">
+      <p>Kkkk Tia Darci! 🥰🤣</p>
+    </div>
+    <div class="foto-polaroid">
+      <img src="imagens/polaroid_6.jpg" alt="Momento 1">
+      <p>Esta com você é muito especial 👩‍❤️‍👨</p>
+    </div>
+  </div>
+</section>
+
+<!--Frase digitando!-->
+    <div class="frase-digitada">
+        <span id="fraseAnimada"></span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <a href="https://www.youtube.com/watch?v=ZkbuGPXJOPA" target="_blank" class="youtube-icon">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </footer>
+  </div>
+
+  <!--animação de coração! -->
+  <div class="hearts-container"></div>
+
+  
+
+
+  <!-- JavaScript -->
+  <script>
+    function iniciar() {
+      document.getElementById("tela-inicial").style.display = "none";
+      document.getElementById("conteudo").style.display = "block";
+
+      const audio = document.getElementById("musica");
+      audio.play();
+
+      // Iniciar contador
+      const contador = document.getElementById('contador');
+      const dataInicio = new Date("2024-06-13T00:00:00");
+
+      function atualizarContador() {
+        const agora = new Date();
+        const diff = agora - dataInicio;
+
+        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diff / (1000 * 60)) % 60);
+        const segundos = Math.floor((diff / 1000) % 60);
+
+        contador.textContent = `${dias} dias, ${horas}h ${minutos}min ${segundos}s`;
+      }
+
+      setInterval(atualizarContador, 1000);
+      atualizarContador();
+    }
+  </script>
+
+  <script>
+function createHearts() {
+  const container = document.querySelector(".hearts-container");
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 3 + Math.random() * 5 + "s";
+  container.appendChild(heart);
+  setTimeout(() => {
+    heart.remove();
+  }, 8000);
+}
+
+setInterval(createHearts, 500);
+</script>
+
+<!--Frase digitando-->
+
+<script>
+const frases = [
+  "Você é minha para sempre.",
+  "Meu lugar favorito no mundo é do seu lado.",
+  "Te amo, Letícia."
+];
+
+let fraseIndex = 0;
+let charIndex = 0;
+const typingElement = document.getElementById("fraseAnimada");
+
+function digitar() {
+  if (charIndex < frases[fraseIndex].length) {
+    typingElement.textContent += frases[fraseIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(digitar, 100);
+  } else {
+    setTimeout(apagar, 2000);
+  }
+}
+
+function apagar() {
+  if (charIndex > 0) {
+    typingElement.textContent = frases[fraseIndex].substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(apagar, 50);
+  } else {
+    fraseIndex = (fraseIndex + 1) % frases.length;
+    setTimeout(digitar, 500);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", digitar);
+</script>
+
+</body>
+
+</html>
